@@ -44,7 +44,7 @@ jobs:
       - name: Run k6 test
         uses: grafana/k6-action@v0.3.1
         with:
-          filename: k6_1.js
+          filename: ${{ inputs.script_file }}
 
       # - name: Run k6 performance test
       #   uses: grafana/k6-action@v0.3.1
