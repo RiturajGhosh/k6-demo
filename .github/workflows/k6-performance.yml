@@ -36,6 +36,11 @@ jobs:
             echo "Make sure the file is in the repository root or provide the correct relative path."
             exit 1
           fi
+      - name: Debug script path
+        run: |
+          echo "Input: ${{ inputs.script_file }}"
+          ls -la
+          ls -la "${{ inputs.script_file }}"
 
       - name: Run k6 performance test
         uses: grafana/k6-action@v0.3.1
