@@ -6,7 +6,7 @@ on:
       script_file:
         description: 'Name of the k6 JS file in the repo root, for example: k6_1.js'
         required: true
-        # default: 'k6_1.js'
+        default: 'k6_1.js'
         type: string
       # vus:
       #   description: 'Number of virtual users'
