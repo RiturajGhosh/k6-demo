@@ -1,0 +1,51 @@
+name: k6 Performance Test
+
+on:
+  workflow_dispatch:
+    inputs:
+      script_file:
+        description: 'Name of the k6 JS file in the repo root, for example: k6_1.js'
+        required: true
+        # default: 'k6_1.js'
+        type: string
+      # vus:
+      #   description: 'Number of virtual users'
+      #   required: false
+      #   default: '2'
+      #   type: string
+      # duration:
+      #   description: 'Test duration, for example: 30s or 1m'
+      #   required: false
+      #   default: '30s'
+      #   type: string
+
+jobs:
+  k6-test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Validate script exists
+        shell: bash
+        run: |
+          if [ ! -f "${{ inputs.script_file }}" ]; then
+            echo "Script file not found: ${{ inputs.script_file }}"
+            echo "Make sure the file is in the repository root or provide the correct relative path."
+            exit 1
+          fi
+
+      - name: Run k6 performance test
+        uses: grafana/k6-action@v0.3.1
+        with:
+          args: run ./${{ inputs.script_file }}
+
+      # - name: Upload k6 summary artifact
+      #   if: always()
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: k6-summary
+      #     path: summary.json
+      #     if-no-files-found: ignore
