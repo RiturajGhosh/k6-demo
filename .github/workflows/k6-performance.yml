@@ -41,11 +41,15 @@ jobs:
           echo "Input: ${{ inputs.script_file }}"
           ls -la
           ls -la "${{ inputs.script_file }}"
-
-      - name: Run k6 performance test
-        uses: grafana/k6-action@v0.3.1
+      - name: Run k6 test
+        uses: grafana/k6-action@v1
         with:
-          args: run ./${{ inputs.script_file }}
+          filename: k6_1.js
+
+      # - name: Run k6 performance test
+      #   uses: grafana/k6-action@v0.3.1
+      #   with:
+      #     args: run ./${{ inputs.script_file }}
 
       # - name: Upload k6 summary artifact
       #   if: always()
